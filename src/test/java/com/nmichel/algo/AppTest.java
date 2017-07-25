@@ -50,7 +50,7 @@ public class AppTest
             .addChild(new TreeOfInt(7))
         ;
 
-        assert((new BreadthSearcher<>(root)).stream()
+        assert((new BreadthWalker<>(root)).stream()
             .filter(e -> e == 4)
             .findFirst().get() != null);
     }
@@ -67,7 +67,7 @@ public class AppTest
             .addChild(new TreeOfInt(7))
         ;
 
-        assert((new BreadthSearcher<>(root)).stream()
+        assert((new BreadthWalker<>(root)).stream()
             .collect(Collectors.toCollection(ArrayList::new))
             .equals(Arrays.asList(0, 1, 4, 7, 2, 3, 5, 6)));
     }
