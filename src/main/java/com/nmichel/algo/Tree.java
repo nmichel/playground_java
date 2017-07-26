@@ -4,7 +4,7 @@ import java.util.stream.Stream;
 
 public interface Tree<T> {
 
-    T node();
+    T value();
 
     Stream<Tree<? extends T>> children();
 }

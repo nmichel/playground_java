@@ -10,63 +10,39 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
+public class BreadthWalkerTest 
     extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    public BreadthWalkerTest( String testName )
     {
         super( testName );
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( BreadthWalkerTest.class );
+    }
+
+    @Override
+    protected void setUp() {
+        root =
+            new TreeOfInt(0)
+                .addChildren(
+                    new TreeOfInt(1)
+                        .addChildren(new TreeOfInt(2), new TreeOfInt(3)),
+                    new TreeOfInt(4)
+                        .addChildren(new TreeOfInt(5), new TreeOfInt(6)),
+                    new TreeOfInt(7));
     }
     
-    /**
-     * Rigourous Test :-)
-     */
     public void testfindItem()
     {
-        final TreeOfInt root = new TreeOfInt(1);
-        root
-            .addChild(new TreeOfInt(0)
-                .addChild(new TreeOfInt(2))
-                .addChild(new TreeOfInt(3)))
-            .addChild(new TreeOfInt(4)
-                .addChild(new TreeOfInt(5))
-                .addChild(new TreeOfInt(6)))
-            .addChild(new TreeOfInt(7))
-        ;
-
         assert((new BreadthWalker<>(root)).stream()
             .filter(e -> e == 4)
             .findFirst().get() != null);
     }
     public void testWalkAsExpected()
     {
-        final TreeOfInt root = new TreeOfInt(0);
-        root
-            .addChild(new TreeOfInt(1)
-                .addChild(new TreeOfInt(2))
-                .addChild(new TreeOfInt(3)))
-            .addChild(new TreeOfInt(4)
-                .addChild(new TreeOfInt(5))
-                .addChild(new TreeOfInt(6)))
-            .addChild(new TreeOfInt(7))
-        ;
-
         assert((new BreadthWalker<>(root)).stream()
             .collect(Collectors.toCollection(ArrayList::new))
             .equals(Arrays.asList(0, 1, 4, 7, 2, 3, 5, 6)));
@@ -81,13 +57,13 @@ public class AppTest
             value = v;
         }
 
-        public TreeOfInt addChild(final Tree<? extends Integer> child) {
-            children.add(child);
+        public TreeOfInt addChildren(final Tree<? extends Integer>... subtrees) {
+            children.addAll(Arrays.asList(subtrees));
             return this;
         }
 
         @Override
-        public Integer node() {
+        public Integer value() {
             return value;
         }
 
@@ -96,4 +72,6 @@ public class AppTest
             return children.stream();
         }
     }
+
+    private TreeOfInt root;
 }
