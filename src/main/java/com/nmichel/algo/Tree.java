@@ -6,5 +6,5 @@ public interface Tree<T> {
 
     T value();
 
-    Stream<Tree<? extends T>> children();
+    Stream<Tree<T>> children();
 }

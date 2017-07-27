@@ -19,7 +19,7 @@ public class BreadthWalker<U> implements Enumeration<U> {
 
     @Override
     public U nextElement() {
-        final Tree<? extends U> node = queue.remove();
+        final Tree<U> node = queue.remove();
         node.children().forEach(c -> queue.add(c));
         return node.value();
     }
@@ -28,5 +28,5 @@ public class BreadthWalker<U> implements Enumeration<U> {
         return Streamer.streamOf(this);
     }
 
-    private final Queue<Tree<? extends U>> queue = new ArrayDeque<>(100);
+    private final Queue<Tree<U>> queue = new ArrayDeque<>(100);
 }

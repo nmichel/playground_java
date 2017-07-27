@@ -51,13 +51,13 @@ public class BreadthWalkerTest
     private static class TreeOfInt implements Tree<Integer> {
 
         private final Integer value;
-        private final List<Tree<? extends Integer>> children = new ArrayList<>();
+        private final List<Tree<Integer>> children = new ArrayList<>();
 
         public TreeOfInt(final int v) {
             value = v;
         }
 
-        public TreeOfInt addChildren(final Tree<? extends Integer>... subtrees) {
+        public TreeOfInt addChildren(final Tree<Integer>... subtrees) {
             children.addAll(Arrays.asList(subtrees));
             return this;
         }
@@ -68,7 +68,7 @@ public class BreadthWalkerTest
         }
 
         @Override
-        public Stream<Tree<? extends Integer>> children() {
+        public Stream<Tree<Integer>> children() {
             return children.stream();
         }
     }
